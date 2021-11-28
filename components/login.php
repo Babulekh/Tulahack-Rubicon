@@ -1,8 +1,3 @@
-<?php  ?>
-<?php
-
-?>
-
 <?php
     error_reporting(E_ALL ^ E_WARNING);
 
@@ -13,6 +8,14 @@
     $users->execute();
 
     if ($_POST["action"] == "register") {
+        $isregistered = $db->prepare("SELECT * FROM users WHERE Username=:username");
+        $isregistered->execute(array(":username"=>$_POST["username"]));
+        $isregistered = $isregistered->fetchAll(PDO::FETCH_DEFAULT)[0]["Username"];
+
+        if ($isregistered) {
+            header("Location:/");
+        }
+
         $id = $db->prepare("SELECT count(*) FROM users");
         $id->execute();
         $id = $id->fetchAll(PDO::FETCH_DEFAULT)[0]['count(*)'];
@@ -22,6 +25,9 @@
 
         $password->execute(array(":id"=>$id+1, ":password"=>$_POST["password"]));
         $user->execute(array(":id"=>$id+1, ":username"=>$_POST["username"]));
+
+        setcookie("id", $id+1, time()+(3600*24), $path = "/");
+        header("Location:/Cabinet.php");
     } else {
         $id = $db->prepare("SELECT ID FROM users WHERE username=:username");
         $id->execute(array(":username"=>$_POST["username"]));
@@ -32,8 +38,10 @@
         $password = $password->fetchAll(PDO::FETCH_DEFAULT)[0][0];
 
         if ($password === $_POST["password"]) {
-            header("Location:Cabinet.php?id=$id");
+            setcookie("id", $id, time()+(3600*24), $path = "/");
+            header("Location:/Cabinet.php");
+        } else {
+            header("Location:/");
         }
     }
-
 ?>
