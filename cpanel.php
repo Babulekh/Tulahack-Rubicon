@@ -60,5 +60,15 @@
     <input type="submit" value="Редактировать" class="text_main">
 </form>
 
+<form method="post" action="/components/createTimetable.php" class="profile__edit-form">
+    <label for="GroupID" class="text_main">ID Группы: </label><input type="text" name="GroupID">
+    <label for="Start" class="text_main">Начало урока: </label><input type="text" name="Start">
+    <label for="End" class="text_main">Конец урока: </label><input type="text" name="End">
+    <label for="Subject" class="text_main">Предмет: </label><input type="text" name="Subject">
+    <label for="RoomNumber" class="text_main">Номер аудитории: </label><input type="text" name="RoomNumber">
+    <label for="TeacherID" class="text_main">ID учителя: </label><input type="text" name="TeacherID">
+    <input type="submit" value="Добавить урок в расписание" class="text_main">
+</form>
+
 </body>
 </html>

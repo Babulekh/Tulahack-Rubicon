@@ -1,5 +1,25 @@
 <?php include './components/header.php'; ?>
 
+<?php
+function print_lesson($lesson) {
+    echo "  
+        <div class='lesson-block'>
+            <div class='lesson-time'>
+                <div class='lesson-time__start text_main'>", $lesson["Start"], "</div>
+                <div class='lesson-time__end text_main'>", $lesson["End"], "</div>
+            </div>
+            <div class='lesson-name text_main'>", $lesson["Subject"], "</div>
+            <div class='lesson-class text_main'>Аудитория №", $lesson["RoomNumber"], "</div>
+            <div class='lesson-teacher text_main'>", $lesson["TeacherID"], "</div>
+        </div>
+        ";
+}
+
+    $timetable = $db->prepare("SELECT * FROM timetable WHERE GroupID = :GroupID");
+    $timetable->execute(array(":GroupID"=>$user["GroupID"]));
+    $timetable = $timetable->fetchAll(PDO::FETCH_DEFAULT);
+?>
+
 <div class="section_main">
     <div class="wrapper_fixed container">
         <form method="post" action="/components/modifyProfile.php" class="profile__edit-form">
@@ -28,8 +48,10 @@
         </div>
         <div class="block_main">
             <div id="profile_main">
-                <div class="text_main" id="profile-main__schedule">
-                    <!-- подтягивается из БД-->
+                <div class="timetable-block">
+                    <?php foreach($timetable as $lesson){ ?>
+                        <?php print_lesson($lesson); ?>
+                    <?php } ?>
                 </div>
                 <div class="text_main" id="profile-main__courses">
                     <!-- подтягивается из БД-->
