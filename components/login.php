@@ -37,7 +37,7 @@
         $password->execute(array(":id"=>$id));
         $password = $password->fetchAll(PDO::FETCH_DEFAULT)[0][0];
 
-        if ($password === $_POST["password"]) {
+        if ($password === hash('ripemd160', $_POST["password"])) {
             setcookie("id", $id, time()+(3600*24), $path = "/");
             header("Location:/Cabinet.php");
         } else {
