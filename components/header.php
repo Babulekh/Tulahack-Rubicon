@@ -22,6 +22,11 @@
 <header class="container">
     <div class="wrapper_fixed">
         <ul class="ul_main ul_horizontal list_selector header_main">
+            <?php
+            if ($user["Username"] == "admin") {
+                echo '<li class="li_main text_main link"><a href="/cpanel.php">cpanel</a></li>';
+            }
+            ?>
             <li class="li_main text_main link">Обучение</li>
             <li class="li_main text_main link"><a href="/Cabinet.php">Профиль</a></li>
             <li class="li_main text_main link"><a href="/shop.php">Магазин</a></li>

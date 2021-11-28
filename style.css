@@ -183,3 +183,16 @@ html, body {
 .lesson-block > *, .user-block > * {
     margin-right: 20px;
 }
+
+.store-item {
+    width: 300px;
+}
+.store-item__price {
+    display: flex;
+}
+
+.store {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

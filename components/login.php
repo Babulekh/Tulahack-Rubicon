@@ -23,7 +23,7 @@
         $password = $db->prepare("INSERT INTO passwords (ID, password) VALUES (:id, :password)");
         $user = $db->prepare("INSERT INTO users (ID, username) VALUES (:id, :username)");
 
-        $password->execute(array(":id"=>$id+1, ":password"=>$_POST["password"]));
+        $password->execute(array(":id"=>$id+1, ":password"=>hash('ripemd160', $_POST["password"])));
         $user->execute(array(":id"=>$id+1, ":username"=>$_POST["username"]));
 
         setcookie("id", $id+1, time()+(3600*24), $path = "/");
