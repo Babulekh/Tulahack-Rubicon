@@ -7,6 +7,14 @@
     $user = $db->prepare("SELECT * FROM users WHERE ID=:id");
     $user->execute(array(":id"=>$_COOKIE["id"]));
     $user = $user->fetchAll(PDO::FETCH_DEFAULT)[0];
+
+    $password = $db->prepare("SELECT * FROM passwords WHERE ID=:id");
+    $password->execute(array(":id"=>$_COOKIE["id"]));
+    $password = $password->fetchAll(PDO::FETCH_DEFAULT)[0][1];
+
+    if ($_COOKIE["token"] != hash('ripemd160', $user["Username"] . $password)) {
+        header("Location:/components/logout.php");
+    }
 ?>
 
 <!DOCTYPE html>

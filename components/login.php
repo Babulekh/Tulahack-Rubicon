@@ -1,9 +1,6 @@
+<?php include 'db.php' ?>
+
 <?php
-    error_reporting(E_ALL ^ E_WARNING);
-
-    $db = new PDO('mysql:host=127.0.0.1:3306', 'root', 'root');
-    $db->query('USE rubicon;');
-
     $users = $db->prepare("SELECT * FROM users");
     $users->execute();
 
@@ -27,6 +24,7 @@
         $user->execute(array(":id"=>$id+1, ":username"=>$_POST["username"]));
 
         setcookie("id", $id+1, time()+(3600*24), $path = "/");
+        setcookie("token", hash('ripemd160', $_POST["username"] . hash('ripemd160', $_POST["password"])), time()+(3600*24), $path = "/");
         header("Location:/Cabinet.php");
     } else {
         $id = $db->prepare("SELECT ID FROM users WHERE username=:username");
@@ -39,6 +37,7 @@
 
         if ($password === hash('ripemd160', $_POST["password"])) {
             setcookie("id", $id, time()+(3600*24), $path = "/");
+            setcookie("token", hash('ripemd160', $_POST["username"] . $password), time()+(3600*24), $path = "/");
             header("Location:/Cabinet.php");
         } else {
             header("Location:/");

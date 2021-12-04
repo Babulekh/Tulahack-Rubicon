@@ -2,7 +2,7 @@
 
 <?php
 function print_lesson($lesson) {
-    echo "  
+    echo "
         <div class='lesson-block'>
             <div class='lesson-time'>
                 <div class='lesson-time__start text_main'>", $lesson["Start"], "</div>
